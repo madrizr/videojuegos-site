@@ -1,18 +1,18 @@
-var buscar = document.getElementById('buscar');
-var picture_one = document.getElementById('buscar_one');
-var picture_two = document.getElementById('buscar_two');
-var picture_three = document.getElementById('buscar_three');
-var game_description = document.getElementById('description');
-var caracteristica = document.getElementById('caracteristica')
+const buscar = document.getElementById('buscar');
+const picture_one = document.getElementById('buscar_one');
+const picture_two = document.getElementById('buscar_two');
+const picture_three = document.getElementById('buscar_three');
+const game_description = document.getElementById('description');
+const caracteristica = document.getElementById('caracteristica')
 
 
-buscar.addEventListener('submit', function(e){
+buscar.addEventListener('submit', e => {
 	e.preventDefault();
 	loading();
-	var titulo_capturado = capturarString(caracteristica, buscar);
+	let titulo_capturado = capturarString(caracteristica, buscar);
 	
 	if(titulo_capturado){
-		let url_id = 'https://www.freetogame.com/api/filter?tag=%203d.mmorpg.fantasy.pvp%20&%20platform%20=%20pc';
+		const url_id = 'https://www.freetogame.com/api/filter?tag=%203d.mmorpg.fantasy.pvp%20&%20platform%20=%20pc';
 		const list = new XMLHttpRequest();
 		list.open('GET', url_id, true);
 		list.send();
@@ -24,7 +24,7 @@ buscar.addEventListener('submit', function(e){
 			let resultado = compararBuscar(lista, titulo_capturado, caracteristica);
 			
 			if (resultado) {
-				let url_description = 'https://www.freetogame.com/api/game?id=';
+				const url_description = 'https://www.freetogame.com/api/game?id=';
 				mostrarJuego(caracteristica, resultado);}
 		}}
 	}
@@ -33,7 +33,7 @@ buscar.addEventListener('submit', function(e){
 
 
 // COMPARA LA BUSQUEDA DEL USUARIO CON TODOS LOS NOMBRES EXISTENTES.
-function compararBuscar(lista, nombre_comparar, id_espacio_mensaje){
+const compararBuscar = (lista, nombre_comparar, id_espacio_mensaje) => {
 
 	for (let juego of lista) {
 		//console.log(juego.title)
@@ -41,7 +41,7 @@ function compararBuscar(lista, nombre_comparar, id_espacio_mensaje){
 		titulo_sin_formato = titulo_sin_formato.toLowerCase();
 		//console.log(titulo_sin_formato);
 		if (nombre_comparar == titulo_sin_formato) {
-			var resultado = juego.id;
+			let resultado = juego.id;
 			return resultado
 		}else{
 			id_espacio_mensaje.innerHTML = `
@@ -54,7 +54,7 @@ function compararBuscar(lista, nombre_comparar, id_espacio_mensaje){
 	}
 }
 // VALIDA SI SE INTRODUJERON VALORES Y CONVIERTE EL VALOR INTRODUCIDO A MINUSCULAS
-function capturarString(id_espacio_mensaje, get_element){
+const capturarString = (id_espacio_mensaje, get_element) => {
 	let datos_capturados = new FormData(get_element);
 
 	if (datos_capturados.get('buscar_juego') != '') {
@@ -72,7 +72,7 @@ function capturarString(id_espacio_mensaje, get_element){
 }
 
 // MOSTRAR LAS CARACTERISTICAS DEL JUEGO EN LA SECCION BUSCAR
-function mostrarJuego(id_espacio_mostrar, objeto_juego){
+const mostrarJuego = (id_espacio_mostrar, objeto_juego) => {
 	fetch('https://www.freetogame.com/api/game?id='+ objeto_juego)
 	.then(respuesta => respuesta.json())
 	.then(res => {
@@ -131,7 +131,7 @@ function mostrarJuego(id_espacio_mostrar, objeto_juego){
 }
 
 // MOSTRAR SPINNER DE CARGA MIENTRAS CARGAN LOS ARCHIVOS.
-function loading(){
+const loading = () => {
 	caracteristica.innerHTML = `
 <div class="d-flex justify-content-center">
 	<div class="sk-fading-circle">
